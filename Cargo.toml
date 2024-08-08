@@ -6,12 +6,17 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "0.14", features = ["wayland"] }
-# Disable low-severity logs at compile time for performance.
+rand = "0.8"
+# Compile low-severity logs out of native builds for performance.
 log = { version = "0.4", features = [
     "max_level_debug",
     "release_max_level_warn",
 ] }
-rand = "0.8"
+# Compile low-severity logs out of web builds for performance.
+tracing = { version = "0.1", features = [
+    "max_level_debug",
+    "release_max_level_warn",
+] }
 
 [features]
 default = [
@@ -31,6 +36,7 @@ dev_native = [
     "bevy/embedded_watcher",
 ]
 
+
 # Idiomatic Bevy code often triggers these lints, and the CI workflow treats them as errors.
 # In some cases they may still signal poor code quality however, so consider commenting out these lines.
 [lints.clippy]
@@ -39,6 +45,7 @@ dev_native = [
 too_many_arguments = "allow"
 # Queries that access many components may trigger this lint.
 type_complexity = "allow"
+
 
 # Compile with Performance Optimizations:
 # https://bevyengine.org/learn/quick-start/getting-started/setup/#compile-with-performance-optimizations

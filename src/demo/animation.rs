@@ -8,8 +8,8 @@ use std::time::Duration;
 
 use bevy::prelude::*;
 
-use super::{audio::sfx::PlaySfx, movement::MovementController};
-use crate::AppSet;
+use super::movement::MovementController;
+use crate::{assets::SoundEffectHandles, audio::sound_effects::SoundEffectCommands as _, AppSet};
 
 pub(super) fn plugin(app: &mut App) {
     // Animate and play sound effects based on controls.
@@ -34,12 +34,12 @@ fn update_animation_movement(
     mut player_query: Query<(&MovementController, &mut Sprite, &mut PlayerAnimation)>,
 ) {
     for (controller, mut sprite, mut animation) in &mut player_query {
-        let dx = controller.0.x;
+        let dx = controller.intent.x;
         if dx != 0.0 {
             sprite.flip_x = dx < 0.0;
         }
 
-        let animation_state = if controller.0 == Vec2::ZERO {
+        let animation_state = if controller.intent == Vec2::ZERO {
             PlayerAnimationState::Idling
         } else {
             PlayerAnimationState::Walking
@@ -64,14 +64,15 @@ fn update_animation_atlas(mut query: Query<(&PlayerAnimation, &mut TextureAtlas)
     }
 }
 
-/// If the player is moving, play a step sound effect synchronized with the animation.
+/// If the player is moving, play a step sound effect synchronized with the
+/// animation.
 fn trigger_step_sfx(mut commands: Commands, mut step_query: Query<&PlayerAnimation>) {
     for animation in &mut step_query {
         if animation.state == PlayerAnimationState::Walking
             && animation.changed()
             && (animation.frame == 2 || animation.frame == 5)
         {
-            commands.trigger(PlaySfx::RandomStep);
+            commands.play_sound_effect(SoundEffectHandles::PATH_STEP);
         }
     }
 }
@@ -97,6 +98,10 @@ impl PlayerAnimation {
     const IDLE_FRAMES: usize = 2;
     /// The duration of each idle frame.
     const IDLE_INTERVAL: Duration = Duration::from_millis(500);
+    /// The number of walking frames.
+    const WALKING_FRAMES: usize = 6;
+    /// The duration of each walking frame.
+    const WALKING_INTERVAL: Duration = Duration::from_millis(50);
 
     fn idling() -> Self {
         Self {
@@ -105,11 +110,6 @@ impl PlayerAnimation {
             state: PlayerAnimationState::Idling,
         }
     }
-
-    /// The number of walking frames.
-    const WALKING_FRAMES: usize = 6;
-    /// The duration of each walking frame.
-    const WALKING_INTERVAL: Duration = Duration::from_millis(50);
 
     fn walking() -> Self {
         Self {

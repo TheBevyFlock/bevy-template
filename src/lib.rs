@@ -1,8 +1,10 @@
+mod assets;
+mod audio;
+mod demo;
 #[cfg(feature = "dev")]
 mod dev_tools;
-mod game;
-mod screen;
-mod ui;
+mod screens;
+mod theme;
 
 use bevy::{
     asset::AssetMetaCheck,
@@ -53,7 +55,13 @@ impl Plugin for AppPlugin {
         );
 
         // Add other plugins.
-        app.add_plugins((game::plugin, screen::plugin, ui::plugin));
+        app.add_plugins((
+            demo::plugin,
+            screens::plugin,
+            theme::plugin,
+            assets::plugin,
+            audio::plugin,
+        ));
 
         // Enable dev tools for dev builds.
         #[cfg(feature = "dev")]
@@ -64,7 +72,7 @@ impl Plugin for AppPlugin {
 /// High-level groupings of systems for the app in the `Update` schedule.
 /// When adding a new variant, make sure to order it in the `configure_sets`
 /// call above.
-#[derive(SystemSet, Debug, Clone, Copy, Eq, PartialEq, Hash)]
+#[derive(SystemSet, Debug, Clone, Copy, Eq, PartialEq, Hash, PartialOrd, Ord)]
 enum AppSet {
     /// Tick timers.
     TickTimers,

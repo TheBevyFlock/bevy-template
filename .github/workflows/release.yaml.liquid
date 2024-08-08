@@ -126,12 +126,12 @@ jobs:
 
       - name: Install cargo-binstall (Web)
         if: ${{ matrix.platform == 'web' }}
-        uses: cargo-bins/cargo-binstall@v1.7.4
+        uses: cargo-bins/cargo-binstall@v1.9.0
 
       - name: Install and run trunk (Web)
         if: ${{ matrix.platform == 'web' }}
         run: |
-          cargo binstall trunk --no-confirm
+          cargo binstall --no-confirm trunk wasm-bindgen-cli wasm-opt
           trunk build --release --dist '${{ env.OUT_DIR }}'
 
       - name: Build binaries (non-Web)

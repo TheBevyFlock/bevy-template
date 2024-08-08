@@ -8,7 +8,7 @@ You can [try this template in your web browser!](https://the-bevy-flock.itch.io/
 
 Don't want to read through the whole README? [@ChristopherBiscardi](https://github.com/ChristopherBiscardi) made a video on how to use the template from start to finish:
 
-[<img src="./docs/thumbnail.png" width=40% height=40% alt="A video tutorial for bevy_quickstart"/>](https://www.youtube.com/watch?v=ESBRyXClaYc)
+[<img src="./docs/img/thumbnail.png" width=40% height=40% alt="A video tutorial for bevy_quickstart"/>](https://www.youtube.com/watch?v=ESBRyXClaYc)
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ Then [create a GitHub repository](https://github.com/new) and push your local re
 
 Navigate to the top of [this GitHub repository](https://github.com/TheBevyFlock/bevy_quickstart/) and select `Use this template > Create a new repository`:
 
-![UI demonstration](./docs/readme-manual-setup.png)
+![UI demonstration](./docs/img/readme-manual-setup.png)
 
 Clone your new Github repository to a local repository and push a commit with the following changes:
 
@@ -42,17 +42,19 @@ Clone your new Github repository to a local repository and push a commit with th
 
 ## Write your game
 
-The best way to get started is to play around with what you find in [`src/game/`](./src/game).
+The best way to get started is to play around with what you find in [`src/demo/`](./src/demo).
 
 This template comes with a basic project structure that you may find useful:
 
-| Path                                     | Description                                           |
-|------------------------------------------|-------------------------------------------------------|
-| [`src/lib.rs`](./src/lib.rs)             | App setup                                             |
-| [`src/screen/`](./src/screen)            | Splash screen, title screen, playing screen, etc.     |
-| [`src/game/`](./src/game)                | Game mechanics & content (replace with your own code) |
-| [`src/ui/`](./src/ui)                    | Reusable UI widgets & theming                         |
-| [`src/dev_tools.rs`](./src/dev_tools.rs) | Dev tools for dev builds                              |
+| Path                                     | Description                                                                    |
+|------------------------------------------|--------------------------------------------------------------------------------|
+| [`src/lib.rs`](./src/lib.rs)             | App setup                                                                      |
+| [`src/assets.rs`](./src/assets.rs)       | Definition of assets that will be preloaded before the game starts             |
+| [`src/audio/`](./src/audio)              | Commands for playing SFX and music                                             |
+| [`src/demo/`](./src/demo)                | Example game mechanics & content (replace with your own code)                  |
+| [`src/dev_tools.rs`](./src/dev_tools.rs) | Dev tools for dev builds                                                       |
+| [`src/screens/`](./src/screens)          | Splash screen, title screen, playing screen, etc.                              |
+| [`src/theme/`](./src/theme)              | Reusable UI widgets & theming                                                  |
 
 Feel free to move things around however you want, though.
 
@@ -76,6 +78,15 @@ If you're using [VS Code](https://code.visualstudio.com/), this template comes w
 
 - Use `cargo run --profile release-native --no-default-features` to run a native release build.
 - Use `trunk serve --release --no-default-features` to run a web release build.
+
+</details>
+
+<details>
+  <summary>Linux dependencies</summary>
+
+If you are using Linux, make sure you take a look at Bevy's [Linux dependencies](https://github.com/bevyengine/bevy/blob/main/docs/linux_dependencies.md).
+Note that this template enables Wayland support, which requires additional dependencies as detailed in the link above.
+Wayland is activated by using the `bevy/wayland` feature in the [`Cargo.toml`](./Cargo.toml).
 
 </details>
 
@@ -106,7 +117,7 @@ The source code in this repository is licensed under any of the following at you
 - [MIT License](./LICENSE-MIT.txt)
 - [Apache License, Version 2.0](./LICENSE-Apache-2.0.txt)
 
-We hold no patent rights to anything presented in this repository.
+The CC0 license explicitly does not waive patent rights, but we confirm that we hold no patent rights to anything presented in this repository.
 
 ## Credits
 
